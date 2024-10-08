@@ -11,4 +11,4 @@ kmodes==0.12.2
 wordcloud==1.9.3
 openpyxl==3.1.5
 pickle-mixin
-
+kmodes
