@@ -17,14 +17,23 @@ file_.close()
 
 import streamlit as st
 
-# Function to make predictions
-def generate_prediction(data):
+# Define a function to generate predictions and recommendations
+def generate_prediction_and_recommendation(data):
     prediction = trained_model.predict(data)
-    # Customize the output based on the prediction result
-    if prediction[0] == 'Success':
-        return 'The student is predicted to succeed in the exam'
+    cluster_label = prediction[0]
+    
+    if cluster_label == 0:
+        return "The student is predicted to succeed in the exam. Recommendation: Needs foundational support in exam preparation, increased access to exam resources, and stress management strategies."
+    elif cluster_label == 1:
+        return "The student is predicted to face challenges in the exam. Recommendation: Requires stress management and more advanced tools for exam preparation to maintain high performance and confidence levels."
+    elif cluster_label == 2:
+        return "The student is predicted to excel in the exam. Recommendation: Benefits from personalized preparation plans and confidence-building programs, with an emphasis on consistent study routines and leveraging family support."
     else:
-        return 'The student is predicted to face challenges in the exam'
+        return "No specific prediction or recommendation."
+
+# Apply the prediction and recommendation function
+df_selected['Prediction_and_Recommendation'] = df_selected.apply(generate_prediction_and_recommendation, axis=1)
+
 
 # Main app interface
 st.title('WAEC & JAMB Exam Challenges Prediction')
